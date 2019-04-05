@@ -56,20 +56,24 @@ def discover_lifx_devices(token):
 
     return device_hash
 
-def trigger_lifx(label, token):
+# TODO check for a valid token
+# TODO check for bad json (maybe key error)
+def trigger_lifx(label, token, color):
+    debug = False
 
     # get a list of devices
     devices = discover_lifx_devices(token)
+    device_id = ""
 
     # get the device is we want to trigger
     for d in devices:
         if d['label'] == label:
-            id = d['id']
+            device_id = d['id']
 
     # Url to call interact with a device
     DEVICE_USAGE_URL = "https://api.lifx.com/v1/lights/id:"
 
-    device_url = DEVICE_USAGE_URL + id + '/state'
+    device_url = DEVICE_USAGE_URL + device_id + '/state'
 
     headers = {
         "Authorization": "Bearer %s" % token,
@@ -85,7 +89,9 @@ def trigger_lifx(label, token):
             "color": color,
         }
 
-    # put the request into json format and update the device
-    for s in new_status:
 
-        response = requests.put(device_url, data=json.dumps(s), headers=headers)
+    # update the device
+    response = requests.put(device_url, data=new_status, headers=headers)
+    # parse the response and status to make sure we did what we wanted to do
+    print(response.status_code)
+    print(response.text)

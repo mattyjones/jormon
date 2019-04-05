@@ -30,10 +30,24 @@ ns_token, ns_url = ns.set_config(args)
 # print("Nightscout Url: " + ns_url)
 # print("LIFX Label: " + lifx_label)
 
-a,b = ns.poll_nightscout(ns_token, ns_url)
+blood_sugar,direction = ns.poll_nightscout(ns_token, ns_url)
 
-print("Blood Sugar: ", a)
-print("Direction: ", b)
+print("Blood Sugar: ", blood_sugar)
+print("Direction: ", direction)
 
-lifx.trigger_lifx(lifx_label, lifx_token)
+# how do we turn the light off when the condition goes away but respect the user
+# something like if the light is on already then change the color for 30s then go back to the previous state
+# if the light was off then turn it on to the correct color for 30s, then turn it back off (returning it to its previous state)
+# TODO need to capture the current state of the device
+
+color = 'white'
+if blood_sugar < 60:
+    color = 'red'
+elif blood_sugar < 80:
+    color = 'orange'
+elif blood_sugar > 300:
+    color = 'red'
+
+# should just pass in a state
+lifx.trigger_lifx(lifx_label, lifx_token, color)
 

@@ -34,7 +34,8 @@ def poll_nightscout(token, url):
     response = requests.get(url, headers=headers)
 
     # Check the response code
-    # print(response.status_code)
+    print(response.status_code)
+    print(response.text)
 
     # parse the response
     current_results = json.loads(response.text)
