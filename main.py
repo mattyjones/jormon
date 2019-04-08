@@ -4,7 +4,6 @@
 # TODO pytest
 
 import argparse
-import pprint
 
 import lifx
 import nightscout as ns
