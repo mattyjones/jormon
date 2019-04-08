@@ -91,7 +91,7 @@ def trigger_lifx(label, token, color):
 
 
     # update the device
-    response = requests.put(device_url, data=new_status, headers=headers)
+    response = requests.put(device_url, data=new_state, headers=headers)
     # parse the response and status to make sure we did what we wanted to do
     print(response.status_code)
     print(response.text)
