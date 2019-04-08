@@ -26,7 +26,7 @@ def set_config(args):
     return token, label
 
 
-def debug_lifx(id):
+def debug_lifx():
 
 	# an array of statuses to go through for debugging purposes
     # https://api.developer.lifx.com/docs/set-state
@@ -81,9 +81,9 @@ def trigger_lifx(label, token, color):
 
     # if debuging the devices, set a sample payload
     if debug:
-        new_status = debug_lifx(id)
+        new_state = debug_lifx()
     else:
-        new_status = {
+        new_state = {
             "power": "on",
             "brightness": 1,
             "color": color,
