@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-# TODO pytdoc
+# TODO pydoc
 # TODO pytest
 
 import argparse
@@ -22,12 +22,6 @@ args = parser.parse_args()
 
 lifx_token, lifx_label = lifx.set_config(args)
 ns_token, ns_url = ns.set_config(args)
-
-
-# print("LIFX Token: " + lifx_token)
-# print("Nightscout Token: " + ns_token)
-# print("Nightscout Url: " + ns_url)
-# print("LIFX Label: " + lifx_label)
 
 blood_sugar,direction = ns.poll_nightscout(ns_token, ns_url)
 
