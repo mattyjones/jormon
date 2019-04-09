@@ -3,6 +3,9 @@
 import requests
 import json
 import os
+import time
+import calendar
+
 
 def set_config(args):
 
@@ -27,6 +30,11 @@ def set_config(args):
 
 def poll_nightscout(token, url):
 
+    # stale results is the age at which results are no longer considered valid, they should still be reported
+    # but we should do something to note that they are stale.
+    # This is in minutes
+    stale_time = 6
+
     headers = {
         "accept": "application/json",
     }
@@ -37,10 +45,24 @@ def poll_nightscout(token, url):
     print(response.status_code)
     print(response.text)
 
+    # Get the current timestamp in GMT
+    current_time = calendar.timegm(time.gmtime())
+
     # parse the response
     current_results = json.loads(response.text)
+    data_time_int = current_results[0]['date']
+    data_time_str = str(data_time_int)
+    data_time_str = data_time_str[:-3]
+    data_time_int = int(data_time_str)
 
-    # How do we account for stale results?
+    # The number of minutes ago that the data was last checked
+    last_check = (current_time - data_time_int) /60
+
+    if last_check > stale_time:
+        print("The data is %d minutes old and outside the requested freshness range" % last_check)
+    else:
+        print("The data is %d minutes old" % last_check)
+
     bg = current_results[0]['sgv']
     direction = current_results[0]['direction']
 
