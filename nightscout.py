@@ -5,12 +5,14 @@ import json
 import os
 import time
 import calendar
+import sys
 
 
 def set_config(args):
 
-    # the order we want is file -> env -> flag with the last one taking the cake
-
+    # Configuration Order
+    # 1. env
+    # 2. flag
     token = ""
     url = ""
 
