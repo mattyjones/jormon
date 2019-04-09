@@ -23,7 +23,7 @@ args = parser.parse_args()
 lifx_token, lifx_label = lifx.set_config(args)
 ns_token, ns_url = ns.set_config(args)
 
-blood_sugar,direction = ns.poll_nightscout(ns_token, ns_url)
+blood_sugar,direction, fresh = ns.poll_nightscout(ns_token, ns_url)
 
 print("Blood Sugar: ", blood_sugar)
 print("Direction: ", direction)
