@@ -2,6 +2,7 @@
 
 import requests
 import json
+import sys
 import os
 
 def set_config(args):
@@ -16,12 +17,20 @@ def set_config(args):
     elif 'LIFX_TOKEN' in os.environ:
         if not os.environ['LIFX_TOKEN'] == "":
             token = os.environ['LIFX_TOKEN']
+    else:
+        print("A lifx token is required")
+        # set some logging here instead of exiting
+        sys.exit(2)
 
     if args.lifx_label:
         label = args.lifx_label
     elif 'LIFX_LABEL' in os.environ:
         if not os.environ['LIFX_LABEL'] == "":
             token = os.environ['LIFX_LABEL']
+    else:
+        print("A lifx label is required")
+        # set some logging here instead of exiting
+        sys.exit(2)
 
     return token, label
 

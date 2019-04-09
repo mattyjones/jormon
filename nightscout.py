@@ -25,6 +25,10 @@ def set_config(args):
     elif 'NIGHTSCOUT_URL' in os.environ:
         if not os.environ['NIGHTSCOUT_URL'] == "":
             token = os.environ['NIGHTSCOUT_URL']
+    else:
+        print("A nightscout url is needed")
+        # set some logging here instead of exiting
+        sys.exit(2)
 
     return token, url
 
